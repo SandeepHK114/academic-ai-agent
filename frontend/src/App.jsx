@@ -6,25 +6,32 @@ function App() {
   const [mode, setMode] = useState("study");
   const [messages, setMessage] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
 
 
   async function sendQuestion() {
-     if (question.trim() === "") {
-        return;
-    }
+
+    if (question.trim() === "") {
+    return;
+    } 
+
+    if (!selectedFile) {
+    alert("Please select a PDF first.");
+    return;
+    
+  }
+    const formdata = new FormData();
+    formdata.append("question", question)
+    formdata.append("mode", mode)
+    formdata.append("file", selectedFile)
+
     setLoading(true)
   try{  
     const result = await fetch(
     "http://127.0.0.1:8000/ask",
     {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        question: question,
-        mode: mode
-      })
+      body: formdata
     }
 
   );
@@ -107,18 +114,27 @@ return (
 
 
         <input
-          type="text"
-          placeholder="Ask anything..."
-          value={question}
-          onChange={(event)=>setQuestion(event.target.value)}
-          onKeyDown={(event)=>{
-            if(event.key==="Enter"){
-              sendQuestion();
-            }
-          }}
+        type="file"
+        accept=".pdf"
+        onChange={(event) => {
+        setSelectedFile(event.target.files[0]);
+        }}
+      />
+      <p>
+        {selectedFile ? selectedFile.name : "No file selected"}
+      </p>
+        <input
+        type="text"
+        value={question}
+         onChange={(event) => setQuestion(event.target.value)}
+         placeholder="Ask a question about the PDF"
+        onKeyDown={(event) => {
+         if (event.key === "Enter" && !loading) {
+            sendQuestion();
+        }
+        }}
         />
-
-
+        
         <button 
           onClick={sendQuestion}
           disabled={loading}

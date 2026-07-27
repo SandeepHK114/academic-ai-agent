@@ -1,7 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Form, File, UploadFile
 from pydantic import BaseModel
 from services.llm_service import ask_llm
 from fastapi.middleware.cors import CORSMiddleware
+import fitz
 
 app = FastAPI()
 
@@ -28,10 +29,31 @@ def health():
 #User sends a request through the /ask endpoint
 
 @app.post("/ask")                        
-def ask_question(request: QuestionRequest): #FASTAPI then coverts this JSON into a readable QuestionRequest object using Pydantic
+async def ask_question(
+    question: str = Form(...),
+    mode: str = Form(...),
+    file: UploadFile = File(...)
+    ):
+    pdf_bytes = await file.read()
 
-    ai_response = ask_llm(request.question, request.mode) #naviagte to ask_llm within llm_service.py
+    pdf_document = fitz.open(
+        stream=pdf_bytes,
+        filetype="pdf"
+    )
+
+    extracted_text = ""
+
+    for page in pdf_document:
+        extracted_text += page.get_text()
+
+    pdf_document.close()
     
-    return{
+    ai_response = ask_llm(
+        question,
+        mode,
+        extracted_text[:12000]
+    )
+
+    return {
         "response": ai_response
     }
