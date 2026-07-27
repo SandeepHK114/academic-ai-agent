@@ -1,6 +1,6 @@
 # Academic AI Assistant
 
-🚧 This project is currently under development.
+This project is still a work in progress.
 
 An AI-powered educational assistant designed to help students learn through personalized explanations, summaries, quizzes, and study tools.
 
