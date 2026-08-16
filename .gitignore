@@ -24,3 +24,10 @@ Thumbs.db
 models/
 *.gguf
 *.bin
+
+# ChromaDB
+chroma/
+src/chroma/
+
+# User uploaded documents
+src/data/docs/
