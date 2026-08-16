@@ -30,4 +30,4 @@ chroma/
 src/chroma/
 
 # User uploaded documents
-src/data/docs/
+src/data/docs

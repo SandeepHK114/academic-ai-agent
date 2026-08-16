@@ -1,11 +1,8 @@
 # Academic AI Assistant
 
-This project is still a work in progress.
-
 An AI-powered educational assistant designed to help students learn through personalized explanations, summaries, quizzes, and study tools.
 
 ## Tech Stack
-
 Frontend:
 - React
 
@@ -14,24 +11,21 @@ Backend:
 - Python
 
 AI:
-- Ollama
-- Large Language Models
+-Gemini 3.7 Flash
+-Gemni Embedding Model
 
 
 ## Features
 
-✅ Chat-based AI assistant  
-✅ Study modes  
-✅ Personalized explanations  
-🚧 PDF analysis  
-🚧 Flashcard generation  
-🚧 Quiz generation  
-🚧 Text-to-speech
+-  Chat-based AI assistant  
+-  Different Study modes  
+-  Personalized explanations  
+-  PDF analysis    
+-  Quiz generation 
+-  Addded RAG document retrival
 
 
 ## Future Improvements
-
-- Document retrieval (RAG)
-- User learning memory
-- Agentic workflows
-- Accessibility features
+- Flashcard Generation
+- Frontend
+- Containerize for Prod
